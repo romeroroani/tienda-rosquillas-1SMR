@@ -7,12 +7,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-           background: linear-gradient(to bottom, #f0c815, #f07c15);
-background-attachment: fixed;
-background-size: cover;
-
-
-           margin: 0;
+            background: linear-gradient(to bottom, #f0c815, #f07c15);
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
             padding: 20px;
         }
         h1 {
@@ -27,6 +25,9 @@ background-size: cover;
             background-color: #fff;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            max-width: 300px; /* Ajusta este valor según el ancho que desees */
+            flex: 1; /* Permite que los donuts se expandan de manera uniforme en la fila */
+            min-width: 180px; /* Evita que se vuelvan demasiado pequeños */
         }
         .donut img {
             width: 150px; /* Tamaño fijo para todas las imágenes */
@@ -40,6 +41,7 @@ background-size: cover;
         }
         .donut-description {
             color: #777;
+            word-wrap: break-word; /* Permite que el texto largo se divida en varias líneas */
         }
         .container {
             display: flex;
@@ -64,26 +66,60 @@ background-size: cover;
     <h1>Selección de Donuts</h1>
     <div class="container">
         <div class="donut">
-            <img src="imagenes/donut-chocolate.jpg" alt="Donut de Chocolate">
-            <div class="donut-name">Donut de Chocolate</div>
-            <div class="donut-description">Delicioso donut cubierto de chocolate.</div>
+            <img src="imagenes/donut-alien.jpeg" alt="Donut Alien">
+            <div class="donut-name">Donut Alien</div>
+            <div class="donut-description">Un donut de otro planeta que te abrirá la mente a otros mundos.</div>
         </div>
         <div class="donut">
-            <img src="imagenes/donut-normal.jpg" alt="Donut Normal">
-            <div class="donut-name">Donut Normal</div>
-            <div class="donut-description">Un clásico donut espolvoreado con azúcar.</div>
+            <img src="imagenes/donut-homero.jpeg" alt="Donut Homero">
+            <div class="donut-name">Donut Homero</div>
+            <div class="donut-description">Inspirado en el famoso personaje, ten cuidado que a lo mejor se come así mismo.</div>
         </div>
         <div class="donut">
-            <img src="imagenes/donut-rosa.jpg" alt="Donut Rosa">
-            <div class="donut-name">Donut Rosa</div>
-            <div class="donut-description">Donut decorado con glaseado rosa.</div>
+            <img src="imagenes/donut-pitufo.jpeg" alt="Donut Pitufo">
+            <div class="donut-name">Donut Pitufo</div>
+            <div class="donut-description">Un dulce azul con un toque mágico.</div>
         </div>
         <div class="donut">
-            <img src="imagenes/donut-oro.png" alt="Donut de Oro"> 
+            <img src="imagenes/donut-monstruo.png" alt="Donut Monstruo">
+            <div class="donut-name">Donut Monstruo</div>
+            <div class="donut-description">Un donut espeluznante, cuidado, a lo mejor terminas tú en su tripa.</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-neumatico.png" alt="Donut Neumático">
+            <div class="donut-name">Donut Neumático</div>
+            <div class="donut-description">Con un diseño único, ¡perfecto para los amantes de los coches! (y de los microplásticos)</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-rata.jpeg" alt="Donut Rata">
+            <div class="donut-name">Donut Rata</div>
+            <div class="donut-description">Un donut normal que viene con un amigo (tú eliges si comértelo o no).</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-oro.jpeg" alt="Donut de Oro">
             <div class="donut-name">Donut de Oro</div>
-            <div class="donut-description">Exclusivo donut cubierto con un glaseado dorado.</div>
+            <div class="donut-description">Un donut exclusivo bañado en oro, cuidado de no romperte un diente.</div>
         </div>
-    
+        <div class="donut">
+            <img src="imagenes/donut-hamburguesa.jpeg" alt="Donut Hamburguesa">
+            <div class="donut-name">Donut Hamburguesa</div>
+            <div class="donut-description">Mitad donut, mitad hamburguesa, una mezcla increíble.</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-pizza.jpeg" alt="Donut Pizza">
+            <div class="donut-name">Donut Pizza</div>
+            <div class="donut-description">Un donut con sabor a pizza, ¿no es perfecto?</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-pinchomoruno.jpeg" alt="Donut Pinchomoruno">
+            <div class="donut-name">Donut Pinchomoruno</div>
+            <div class="donut-description">Un donut que te hará sentir como en un verdadero perol.</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-kebab.jpeg" alt="Donut Kebab">
+            <div class="donut-name">Donut Kebab</div>
+            <div class="donut-description">Un donut con el sabor típico de salir de la disco a las 5 am.</div>
+        </div>
     </div>
     <br>
     <div style="text-align: center;">
