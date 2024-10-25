@@ -3,46 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Donuts 1ºSMR</title>
+    <title>Selección de Donuts</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #87CEEB; /* Color de fondo azul claro */
             margin: 0;
             padding: 20px;
-            text-align: center;
         }
         h1 {
+            text-align: center;
             color: #333;
-            margin-bottom: 20px;
         }
-        img {
-            max-width: 25%; /* Asegura que la imagen se ajuste al ancho de la pantalla */
-            height: auto; /* Mantiene la proporción de la imagen */
-            border-radius: 8px; /* Bordes redondeados para la imagen */
-            margin-bottom: 20px; /* Espacio entre la imagen y el botón */
+        .donut {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px;
+            background-color: #fff;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-        .btn {
-            background-color: #e67e22; /* Color del botón */
-            color: white; /* Color del texto del botón */
-            padding: 10px 20px; /* Espaciado interno del botón */
-            border: none; /* Sin borde */
-            border-radius: 5px; /* Bordes redondeados */
-            cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-            text-decoration: none; /* Sin subrayado */
-            font-size: 1.2em; /* Tamaño de la fuente */
+        .donut img {
+            width: 150px; /* Tamaño fijo para todas las imágenes */
+            height: auto; /* Mantiene la proporción */
+            border-radius: 8px;
+            margin-bottom: 10px; /* Espacio entre la imagen y el texto */
         }
-        .btn:hover {
-            background-color: #d35400; /* Color del botón al pasar el mouse */
+        .donut-name {
+            font-size: 1.5em;
+            color: #e67e22; /* Color naranja */
+        }
+        .donut-description {
+            color: #777;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
 
-    <h1>Tienda Donuts 1ºSMR</h1>
-    <img src="imagenes/mascota-donut.jpeg" alt="Donut Grande">
-    <br>
-    <a href="tiendadonuts.html" class="btn">Ir a la tienda</a>
+    <h1>Selección de Donuts</h1>
+    <div class="container">
+        <div class="donut">
+            <img src="imagenes/donut-chocolate.jpg" alt="Donut de Chocolate">
+            <div class="donut-name">Donut de Chocolate</div>
+            <div class="donut-description">Delicioso donut cubierto de chocolate.</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-normal.jpg" alt="Donut Normal">
+            <div class="donut-name">Donut Normal</div>
+            <div class="donut-description">Un clásico donut espolvoreado con azúcar.</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-rosa.jpg" alt="Donut Rosa">
+            <div class="donut-name">Donut Rosa</div>
+            <div class="donut-description">Donut decorado con glaseado rosa.</div>
+        </div>
+        <div class="donut">
+            <img src="imagenes/donut-oro.png" alt="Donut de Oro"> 
+            <div class="donut-name">Donut de Oro</div>
+            <div class="donut-description">Exclusivo donut cubierto con un glaseado dorado.</div>
+        </div>
+    </div>
 
 </body>
 </html>
+
