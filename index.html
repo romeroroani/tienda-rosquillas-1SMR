@@ -1,27 +1,35 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Donuts 1ºSMR</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-image: linear-gradient(to bottom, #fdd835, #ffb300), url('imagenes/donut-fondo.png'); /* Degradado y mosaico PNG */
+            background-repeat: repeat; /* Repite la imagen en mosaico */
+            background-size: auto; /* Tamaño original de la imagen */
+            background-blend-mode: normal; /* Muestra el mosaico sobre el degradado */
             margin: 0;
             padding: 20px;
             text-align: center;
         }
+
         h1 {
             color: #333;
             margin-bottom: 20px;
         }
+
         img {
             max-width: 25%; /* Asegura que la imagen se ajuste al ancho de la pantalla */
             height: auto; /* Mantiene la proporción de la imagen */
             border-radius: 8px; /* Bordes redondeados para la imagen */
             margin-bottom: 20px; /* Espacio entre la imagen y el botón */
         }
+
         .btn {
             background-color: #e67e22; /* Color del botón */
             color: white; /* Color del texto del botón */
@@ -32,18 +40,19 @@
             text-decoration: none; /* Sin subrayado */
             font-size: 1.2em; /* Tamaño de la fuente */
         }
+
         .btn:hover {
             background-color: #d35400; /* Color del botón al pasar el mouse */
         }
     </style>
-</head>
-<body>
 
+</head>
+
+<body>
     <h1>Tienda Donuts 1ºSMR</h1>
     <img src="imagenes/mascota-donut.jpeg" alt="Donut Grande">
-    <br>
+    <br> 
     <a href="tiendadonuts.html" class="btn">Ir a la tienda</a>
-
 </body>
-</html>
 
+</html>
