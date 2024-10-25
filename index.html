@@ -23,10 +23,11 @@
         }
 
         img {
-            max-width: 25%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            width: 100%; /* La imagen ocupará el 100% del contenedor */
+            max-width: 400px; /* Tamaño máximo para pantallas grandes */
+            height: auto; /* Mantiene la proporción de la imagen */
+            border-radius: 20px;
+            margin-bottom: 0px;
         }
 
         .btn-tienda,
@@ -47,7 +48,7 @@
         }
 
         .btn-tienda:hover {
-            background-color: #d3940d;
+            background-color: #973000;
         }
 
         .btn-personal {
@@ -58,13 +59,22 @@
         .btn-personal:hover {
             background-color: #388E3C;
         }
+
+        /* Media Query para pantallas pequeñas */
+        @media (max-width: 600px) {
+            img {
+                max-width: 90%; /* En móviles, la imagen ocupará hasta el 90% del ancho */
+            }
+        }
     </style>
 
 </head>
 
 <body>
     <h1>Tienda Donuts 1ºSMR</h1>
-    <img src="imagenes/mascota-donut.jpeg">
+    <img src="imagenes/mascota-donut.jpeg" alt="Donut Mascota">
+    
+    <p style="color: rgb(0, 0, 0); font-size: 30px;"><b>La mejor tienda de donuts de la historia</b></p>
     <br>
     <a href="tiendadonuts.html" class="btn-tienda">Ir a la tienda</a>
     <br>
