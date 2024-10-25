@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -9,10 +9,9 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-             background: linear-gradient(to bottom, #f0c815, #f07c15);
-background-attachment: fixed;
-background-size: cover;
-
+            background: linear-gradient(to bottom, #f0c815, #f07c15);
+            background-attachment: fixed;
+            background-size: cover;
             margin: 0;
             padding: 20px;
             text-align: center;
@@ -24,25 +23,40 @@ background-size: cover;
         }
 
         img {
-            max-width: 25%; /* Asegura que la imagen se ajuste al ancho de la pantalla */
-            height: auto; /* Mantiene la proporción de la imagen */
-            border-radius: 8px; /* Bordes redondeados para la imagen */
-            margin-bottom: 20px; /* Espacio entre la imagen y el botón */
+            max-width: 25%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
 
-        .btn {
-            background-color: #f05a15; /* Color del botón */
-            color: white; /* Color del texto del botón */
-            padding: 10px 20px; /* Espaciado interno del botón */
-            border: none; /* Sin borde */
-            border-radius: 5px; /* Bordes redondeados */
-            cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-            text-decoration: none; /* Sin subrayado */
-            font-size: 1.2em; /* Tamaño de la fuente */
+        .btn-tienda,
+        .btn-personal {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: inline-block;
+            margin-bottom: 20px; /* Espacio entre botones */
         }
 
-        .btn:hover {
-            background-color: #d3940d; /* Color del botón al pasar el mouse */
+        .btn-tienda {
+            background-color: #f05a15;
+            color: white;
+        }
+
+        .btn-tienda:hover {
+            background-color: #d3940d;
+        }
+
+        .btn-personal {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-personal:hover {
+            background-color: #388E3C;
         }
     </style>
 
@@ -51,8 +65,10 @@ background-size: cover;
 <body>
     <h1>Tienda Donuts 1ºSMR</h1>
     <img src="imagenes/mascota-donut.jpeg">
-    <br> 
-    <a href="tiendadonuts.html" class="btn">Ir a la tienda</a>
+    <br>
+    <a href="tiendadonuts.html" class="btn-tienda">Ir a la tienda</a>
+    <br>
+    <a href="personal.html" class="btn-personal">Nuestros empleados</a>
 </body>
 
 </html>
