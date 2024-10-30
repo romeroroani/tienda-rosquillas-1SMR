@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Rosquillas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f0c815, #f07c15);
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .rosquilla {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px;
+            background-color: #fff;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 300px; /* Ajusta este valor según el ancho que desees */
+            flex: 1; /* Permite que las rosquillas se expandan de manera uniforme en la fila */
+            min-width: 180px; /* Evita que se vuelvan demasiado pequeñas */
+        }
+        .rosquilla img {
+            width: 150px; /* Tamaño fijo para todas las imágenes */
+            height: auto; /* Mantiene la proporción */
+            border-radius: 8px;
+            margin-bottom: 10px; /* Espacio entre la imagen y el texto */
+        }
+        .rosquilla-name {
+            font-size: 1.5em;
+            color: #e67e22; /* Color naranja */
+        }
+        .rosquilla-description {
+            color: #777;
+            word-wrap: break-word; /* Permite que el texto largo se divida en varias líneas */
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .back-btn {
+            background-color: #f05a15;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Selección de Rosquillas</h1>
+    <div class="container">
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-alien.jpeg" alt="Rosquilla Alien">
+            <div class="rosquilla-name">Rosquilla Alien</div>
+            <div class="rosquilla-description">Una rosquilla de otro planeta que te abrirá la mente a otros mundos.</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-homero.jpeg" alt="Rosquilla Homero">
+            <div class="rosquilla-name">Rosquilla Homero</div>
+            <div class="rosquilla-description">Inspirado en el famoso personaje, ten cuidado que a lo mejor se come así misma.</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-pitufo.jpeg" alt="Rosquilla Pitufo">
+            <div class="rosquilla-name">Rosquilla Pitufo</div>
+            <div class="rosquilla-description">Un dulce azul con un toque mágico.</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-monstruo.png" alt="Rosquilla Monstruo">
+            <div class="rosquilla-name">Rosquilla Monstruo</div>
+            <div class="rosquilla-description">Una rosquilla espeluznante, cuidado, a lo mejor terminas tú en su tripa.</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-neumatico.png" alt="Rosquilla Neumático">
+            <div class="rosquilla-name">Rosquilla Neumático</div>
+            <div class="rosquilla-description">Con un diseño único, ¡perfecto para los amantes de los coches! (y de los microplásticos)</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-rata.jpeg" alt="Rosquilla Rata">
+            <div class="rosquilla-name">Rosquilla Rata</div>
+            <div class="rosquilla-description">Una rosquilla normal que viene con un amigo (tú eliges si comértelo o no).</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-oro.jpeg" alt="Rosquilla de Oro">
+            <div class="rosquilla-name">Rosquilla de Oro</div>
+            <div class="rosquilla-description">Una rosquilla exclusiva bañada en oro, cuidado de no romperte un diente.</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-hamburguesa.jpeg" alt="Rosquilla Hamburguesa">
+            <div class="rosquilla-name">Rosquilla Hamburguesa</div>
+            <div class="rosquilla-description">Mitad rosquilla, mitad hamburguesa, una mezcla increíble.</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-pizza.jpeg" alt="Rosquilla Pizza">
+            <div class="rosquilla-name">Rosquilla Pizza</div>
+            <div class="rosquilla-description">Una rosquilla con sabor a pizza, ¿no es perfecto?</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-pinchomoruno.jpeg" alt="Rosquilla Pinchomoruno">
+            <div class="rosquilla-name">Rosquilla Pinchomoruno</div>
+            <div class="rosquilla-description">Una rosquilla que te hará sentir como en un verdadero perol.</div>
+        </div>
+        <div class="rosquilla">
+            <img src="imagenes/rosquilla-kebab.jpeg" alt="Rosquilla Kebab">
+            <div class="rosquilla-name">Rosquilla Kebab</div>
+            <div class="rosquilla-description">Una rosquilla con el sabor típico de salir de la disco a las 5 am.</div>
+        </div>
+    </div>
+    <br>
+    <div style="text-align: center;">
+        <a href="index.html" class="back-btn">Volver a la página principal</a>
+    </div>
+    
+</body>
+</html>
