@@ -28,6 +28,7 @@
             height: auto; /* Mantiene la proporción de la imagen */
             border-radius: 20px;
             margin-bottom: 0px;
+            cursor: pointer; /* Cambiar el cursor para indicar que es clickeable */
         }
 
         .employee-name {
@@ -64,19 +65,49 @@
         .back-btn:hover {
             background-color: #d3940d;
         }
-       
-    
+
+        /* Estilos para el globo de texto */
+        .tooltip {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 300px;
+            font-size: 1em;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 
 <body>
     <h1>Nuestros Empleados</h1>
-    <img src="imagenes/chema-panadero.png" alt="Imagen de Chema" class="employee-img">
+    <div style="position: relative; display: inline-block;">
+        <img src="imagenes/chema-panadero.png" alt="Imagen de Chema" class="employee-img" onclick="toggleTooltip()">
+        <!-- Globo de texto que aparecerá al hacer clic -->
+        <div id="tooltip" class="tooltip">
+            Un secreto: Mi Rosquilla de taco tiene un pequeño secreto si haces click en ella. 
+        </div>
+    </div>
     <div class="employee-name"><b>Chema</b></div>
     <div class="employee-role">Panadero</div>
     <div class="employee-description">Chema es nuestro panadero experto, responsable de la creación de todas las rosquillas frescas y deliciosas de nuestra tienda. Con años de experiencia, se asegura de que cada rosquilla tenga el mejor sabor y calidad.</div>
     <br>
     <a href="index.html" class="back-btn">Volver a la página principal</a>
+
+    <script>
+        // Función que muestra y oculta el globo de texto
+        function toggleTooltip() {
+            var tooltip = document.getElementById('tooltip');
+            if (tooltip.style.display === 'block') {
+                tooltip.style.display = 'none';
+            } else {
+                tooltip.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 
 </html>

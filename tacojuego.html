@@ -39,11 +39,19 @@
         }
 
         #score {
+            
             position: absolute;
             top: 10px;
             left: 10px;
-            font-size: 20px;
-            color: #333;
+            background-color: #f05a15;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            
+            text-decoration: none;
+            font-size: 1.2em;
+           
         }
 
         #victory {
@@ -64,9 +72,23 @@
     </style>
 </head>
 <body>
-
+    <div style="position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.5em;
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 10px;
+    width: auto;
+    text-align: center;">
+        <h1>Come tacos para ganar</h1>
+    </div>
+  
     <div id="imagen"></div>
-    <div id="score">Puntaje: 0</div>
+    <div id="score">Tacos: 0</div>
     <div id="victory"></div>
 
     <script>
@@ -137,7 +159,7 @@
                 if (checkCollision(taco)) {
                     taco.remove();
                     score++;
-                    scoreDisplay.textContent = 'Puntaje: ' + score;
+                    scoreDisplay.textContent = 'Tacos: ' + score;
 
                     // Incrementa el tamaño de tacotaco
                     imagen.style.width = (currentWidth + sizeIncrement) + 'px';
