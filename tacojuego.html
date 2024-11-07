@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego Tacotaco</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f08a15, #c45b00);
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #imagen {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-image: url('media/tacotaco.png');
+            background-size: cover;
+            image-rendering: pixelated;
+        }
+
+        .taco {
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            background-image: url('media/taco.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            image-rendering: pixelated;
+        }
+
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: #333;
+        }
+
+        #victory {
+           /* Oculto por defecto */
+           display: none; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px; /* Ajustar tamaño para hacerlo visible */
+            height: 200px;
+            background-image: url('media/victoria.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            image-rendering: pixelated;
+            z-index: 100; /* Asegura que esté por encima de otros elementos */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="imagen"></div>
+    <div id="score">Puntaje: 0</div>
+    <div id="victory"></div>
+
+    <script>
+        let imagen = document.getElementById('imagen');
+        let scoreDisplay = document.getElementById('score');
+        let victoryImage = document.getElementById('victory');
+        let posX = window.innerWidth / 2 - 25;
+        let posY = window.innerHeight / 2 - 25;
+        let score = 0;
+        let sizeIncrement = 5;
+        const victoryScore = 3000; // Puntaje para mostrar la imagen de victoria
+
+        imagen.style.left = posX + 'px';
+        imagen.style.top = posY + 'px';
+
+        let keys = { w: false, a: false, s: false, d: false };
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'w' || event.key === 'W') keys.w = true;
+            else if (event.key === 'a' || event.key === 'A') keys.a = true;
+            else if (event.key === 's' || event.key === 'S') keys.s = true;
+            else if (event.key === 'd' || event.key === 'D') keys.d = true;
+        });
+
+        document.addEventListener('keyup', function(event) {
+            if (event.key === 'w' || event.key === 'W') keys.w = false;
+            else if (event.key === 'a' || event.key === 'A') keys.a = false;
+            else if (event.key === 's' || event.key === 'S') keys.s = false;
+            else if (event.key === 'd' || event.key === 'D') keys.d = false;
+        });
+
+        function createTaco() {
+            let taco = document.createElement('div');
+            taco.classList.add('taco');
+            taco.style.left = Math.random() * (window.innerWidth - 32) + 'px';
+            taco.style.top = Math.random() * (window.innerHeight - 32) + 'px';
+            document.body.appendChild(taco);
+            return taco;
+        }
+
+        function checkCollision(taco) {
+            let tacoRect = taco.getBoundingClientRect();
+            let imagenRect = imagen.getBoundingClientRect();
+
+            return !(tacoRect.right < imagenRect.left || 
+                     tacoRect.left > imagenRect.right || 
+                     tacoRect.bottom < imagenRect.top || 
+                     tacoRect.top > imagenRect.bottom);
+        }
+
+        setInterval(function() {
+            const step = 5;
+            let currentWidth = imagen.offsetWidth;
+            let currentHeight = imagen.offsetHeight;
+
+            // Movimiento en cada dirección, considerando los límites dinámicos
+            if (keys.a && posX > 0) posX -= step;
+            if (keys.d && posX < window.innerWidth - currentWidth) posX += step;
+            if (keys.w && posY > 0) posY -= step;
+            if (keys.s && posY < window.innerHeight - currentHeight) posY += step;
+
+            imagen.style.left = posX + 'px';
+            imagen.style.top = posY + 'px';
+
+            // Colisiones con tacos
+            let tacos = document.querySelectorAll('.taco');
+            tacos.forEach(function(taco) {
+                if (checkCollision(taco)) {
+                    taco.remove();
+                    score++;
+                    scoreDisplay.textContent = 'Puntaje: ' + score;
+
+                    // Incrementa el tamaño de tacotaco
+                    imagen.style.width = (currentWidth + sizeIncrement) + 'px';
+                    imagen.style.height = (currentHeight + sizeIncrement) + 'px';
+
+                    createTaco(); // Crea un nuevo taco
+                }
+            });
+
+            // Verifica si se alcanza el puntaje de victoria
+            if (score >= victoryScore) {
+                victoryImage.style.display = 'block'; // Muestra la imagen de victoria
+            }
+
+        }, 10);
+
+        setInterval(createTaco, 2000);
+
+    </script>
+
+</body>
+</html>
