@@ -39,7 +39,6 @@
         }
 
         #score {
-            
             position: absolute;
             top: 10px;
             left: 10px;
@@ -48,42 +47,28 @@
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            
             text-decoration: none;
             font-size: 1.2em;
-           
         }
 
         #victory {
-           /* Oculto por defecto */
-           display: none; 
+            display: none;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 700px; /* Ajustar tamaño para hacerlo visible */
+            width: 700px;
             height: 200px;
             background-image: url('media/victoria.png');
             background-size: contain;
             background-repeat: no-repeat;
             image-rendering: pixelated;
-            z-index: 100; /* Asegura que esté por encima de otros elementos */
+            z-index: 100;
         }
     </style>
 </head>
 <body>
-    <div style="position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.5em;
-    font-weight: bold;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 5px 10px;
-    border-radius: 10px;
-    width: auto;
-    text-align: center;">
+    <div style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); font-size: 0.5em; font-weight: bold; color: #fff; background-color: rgba(0, 0, 0, 0.7); padding: 5px 10px; border-radius: 10px; width: auto; text-align: center;">
         <h1>Come tacos para ganar</h1>
     </div>
   
@@ -99,27 +84,68 @@
         let posY = window.innerHeight / 2 - 25;
         let score = 0;
         let sizeIncrement = 5;
-        const victoryScore = 3000; // Puntaje para mostrar la imagen de victoria
+        const victoryScore = 3000;
 
         imagen.style.left = posX + 'px';
         imagen.style.top = posY + 'px';
 
         let keys = { w: false, a: false, s: false, d: false };
+        let startTouchX = 0;
+        let startTouchY = 0;
 
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'w' || event.key === 'W') keys.w = true;
-            else if (event.key === 'a' || event.key === 'A') keys.a = true;
-            else if (event.key === 's' || event.key === 'S') keys.s = true;
-            else if (event.key === 'd' || event.key === 'D') keys.d = true;
-        });
+        // Detectar si es dispositivo móvil (Android o similar)
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-        document.addEventListener('keyup', function(event) {
-            if (event.key === 'w' || event.key === 'W') keys.w = false;
-            else if (event.key === 'a' || event.key === 'A') keys.a = false;
-            else if (event.key === 's' || event.key === 'S') keys.s = false;
-            else if (event.key === 'd' || event.key === 'D') keys.d = false;
-        });
+        if (isMobile) {
+            // Control táctil: Detectar el toque en la pantalla
+            document.addEventListener('touchstart', function(event) {
+                const touch = event.touches[0];
+                startTouchX = touch.clientX;
+                startTouchY = touch.clientY;
+            });
 
+            document.addEventListener('touchmove', function(event) {
+                event.preventDefault(); // Prevenir el desplazamiento de la página
+
+                const touch = event.touches[0];
+                let diffX = touch.clientX - startTouchX;
+                let diffY = touch.clientY - startTouchY;
+
+                // Mover la imagen según el movimiento del dedo
+                posX += diffX;
+                posY += diffY;
+
+                // Restringir el movimiento a los límites de la pantalla
+                if (posX < 0) posX = 0;
+                if (posX > window.innerWidth - imagen.offsetWidth) posX = window.innerWidth - imagen.offsetWidth;
+                if (posY < 0) posY = 0;
+                if (posY > window.innerHeight - imagen.offsetHeight) posY = window.innerHeight - imagen.offsetHeight;
+
+                imagen.style.left = posX + 'px';
+                imagen.style.top = posY + 'px';
+
+                // Actualizar las coordenadas de inicio
+                startTouchX = touch.clientX;
+                startTouchY = touch.clientY;
+            });
+        } else {
+            // Control con teclas WASD (para PC)
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'w' || event.key === 'W') keys.w = true;
+                else if (event.key === 'a' || event.key === 'A') keys.a = true;
+                else if (event.key === 's' || event.key === 'S') keys.s = true;
+                else if (event.key === 'd' || event.key === 'D') keys.d = true;
+            });
+
+            document.addEventListener('keyup', function(event) {
+                if (event.key === 'w' || event.key === 'W') keys.w = false;
+                else if (event.key === 'a' || event.key === 'A') keys.a = false;
+                else if (event.key === 's' || event.key === 'S') keys.s = false;
+                else if (event.key === 'd' || event.key === 'D') keys.d = false;
+            });
+        }
+
+        // Crear tacos
         function createTaco() {
             let taco = document.createElement('div');
             taco.classList.add('taco');
@@ -129,6 +155,7 @@
             return taco;
         }
 
+        // Comprobar colisión
         function checkCollision(taco) {
             let tacoRect = taco.getBoundingClientRect();
             let imagenRect = imagen.getBoundingClientRect();
@@ -144,7 +171,7 @@
             let currentWidth = imagen.offsetWidth;
             let currentHeight = imagen.offsetHeight;
 
-            // Movimiento en cada dirección, considerando los límites dinámicos
+            // Movimiento en cada dirección (PC o móvil)
             if (keys.a && posX > 0) posX -= step;
             if (keys.d && posX < window.innerWidth - currentWidth) posX += step;
             if (keys.w && posY > 0) posY -= step;
@@ -161,19 +188,17 @@
                     score++;
                     scoreDisplay.textContent = 'Tacos: ' + score;
 
-                    // Incrementa el tamaño de tacotaco
                     imagen.style.width = (currentWidth + sizeIncrement) + 'px';
                     imagen.style.height = (currentHeight + sizeIncrement) + 'px';
 
-                    createTaco(); // Crea un nuevo taco
+                    createTaco();
                 }
             });
 
-            // Verifica si se alcanza el puntaje de victoria
+            // Verificar victoria
             if (score >= victoryScore) {
-                victoryImage.style.display = 'block'; // Muestra la imagen de victoria
+                victoryImage.style.display = 'block';
             }
-
         }, 10);
 
         setInterval(createTaco, 2000);
