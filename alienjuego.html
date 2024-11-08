@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Marcianitos</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        canvas {
+            display: block;
+            margin: auto;
+        }
+
+        #start-screen {
+            color: white;
+            font-size: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        #game-over {
+            color: red;
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="gameCanvas"></canvas>
+
+<div id="start-screen">
+    Pulsa cualquier tecla para empezar
+</div>
+
+<div id="game-over" style="display: none;">
+    ¡GAME OVER! <br> Puntuación: <span id="final-score"></span>
+</div>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let spaceship = {
+        width: 50,
+        height: 30,
+        x: canvas.width / 2 - 25,
+        y: canvas.height - 60,
+        speed: 5,
+        dx: 0
+    };
+
+    const alienWidth = 40;
+    const alienHeight = 40;
+    const alienRowCount = 5;
+    const alienColumnCount = 10;
+    let aliens = [];
+    let alienSpeed = 1;
+    let moveDirection = 1; // 1 = derecha, -1 = izquierda
+
+    let bullets = [];
+    let alienBullets = [];
+    let gameOver = false;
+    let score = 0;
+    let lives = 3;
+    let isGameStarted = false;
+    let lastShotTime = 0;  // Tiempo del último disparo de los marcianos
+    let lastAlienShotTime = 0; // Tiempo del último disparo de los marcianos
+
+    // Crear los marcianos
+    function createAliens() {
+        for (let row = 0; row < alienRowCount; row++) {
+            aliens[row] = [];
+            for (let col = 0; col < alienColumnCount; col++) {
+                aliens[row][col] = {
+                    x: col * (alienWidth + 10) + 50,
+                    y: row * (alienHeight + 10) + 50,
+                    isAlive: true
+                };
+            }
+        }
+    }
+
+    // Dibuja la nave espacial
+    function drawSpaceship() {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(spaceship.x, spaceship.y, spaceship.width, spaceship.height);
+    }
+
+    // Dibuja los marcianos
+    function drawAliens() {
+        aliens.forEach(row => {
+            row.forEach(alien => {
+                if (alien.isAlive) {
+                    ctx.fillStyle = 'green';
+                    ctx.fillRect(alien.x, alien.y, alienWidth, alienHeight);
+                }
+            });
+        });
+    }
+
+    // Dibuja las balas
+    function drawBullets() {
+        bullets.forEach(bullet => {
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(bullet.x, bullet.y, 5, 10);
+        });
+    }
+
+    // Dibuja las balas de los marcianos
+    function drawAlienBullets() {
+        alienBullets.forEach(bullet => {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(bullet.x, bullet.y, 5, 10);
+        });
+    }
+
+    // Dibuja el puntaje y las vidas
+    function drawScoreAndLives() {
+        ctx.fillStyle = 'white';
+        ctx.font = '20px Arial';
+        ctx.fillText('Puntos: ' + score, 20, 30);
+        ctx.fillText('Vidas: ' + lives, canvas.width - 100, 30);
+    }
+
+    // Mover la nave espacial
+    function moveSpaceship() {
+        spaceship.x += spaceship.dx;
+
+        if (spaceship.x < 0) {
+            spaceship.x = 0;
+        } else if (spaceship.x + spaceship.width > canvas.width) {
+            spaceship.x = canvas.width - spaceship.width;
+        }
+    }
+
+    // Mover las balas
+    function moveBullets() {
+        bullets = bullets.filter(bullet => bullet.y > 0);
+        bullets.forEach(bullet => {
+            bullet.y -= 7;
+        });
+    }
+
+    // Mover las balas de los marcianos
+    function moveAlienBullets() {
+        alienBullets = alienBullets.filter(bullet => bullet.y < canvas.height);
+        alienBullets.forEach(bullet => {
+            bullet.y += 5;
+        });
+    }
+
+    // Mover los marcianos
+    function moveAliens() {
+        aliens.forEach(row => {
+            row.forEach(alien => {
+                if (alien.isAlive) {
+                    alien.x += alienSpeed * moveDirection;
+                }
+            });
+        });
+
+        // Si el primer o último marciano toca el borde, cambia de dirección y baja
+        if (aliens[0].some(alien => alien.x <= 0) || aliens[0].some(alien => alien.x + alienWidth >= canvas.width)) {
+            moveDirection *= -1;
+            aliens.forEach(row => {
+                row.forEach(alien => {
+                    alien.y += 10;
+                });
+            });
+        }
+    }
+
+    // Los marcianos disparan
+    function alienShoot() {
+        const currentTime = Date.now();
+        
+        // Solo permite un disparo por segundo
+        if (currentTime - lastAlienShotTime < 800) { // Disparan cada 800ms
+            return;  // Si no ha pasado suficiente tiempo desde el último disparo, no disparan
+        }
+        
+        // Actualiza el tiempo del último disparo
+        lastAlienShotTime = currentTime;
+
+        // Disparan desde cualquier fila, no solo desde la más cercana
+        aliens.forEach(row => {
+            row.forEach(alien => {
+                if (alien.isAlive && Math.random() < 0.02) { // Probabilidad de disparar
+                    alienBullets.push({
+                        x: alien.x + alienWidth / 2 - 2.5,
+                        y: alien.y + alienHeight
+                    });
+                }
+            });
+        });
+    }
+
+    // Detectar colisiones entre las balas y los marcianos
+    function detectCollisions() {
+        bullets.forEach(bullet => {
+            aliens.forEach(row => {
+                row.forEach(alien => {
+                    if (alien.isAlive &&
+                        bullet.x < alien.x + alienWidth &&
+                        bullet.x + 5 > alien.x &&
+                        bullet.y < alien.y + alienHeight &&
+                        bullet.y + 10 > alien.y) {
+                        alien.isAlive = false;
+                        score++;
+                        bullets = bullets.filter(b => b !== bullet); // Elimina la bala después de colisionar
+                    }
+                });
+            });
+        });
+    }
+
+    // Detectar colisiones entre las balas de los marcianos y la nave
+    function detectAlienBulletCollisions() {
+        alienBullets.forEach(bullet => {
+            if (bullet.x < spaceship.x + spaceship.width &&
+                bullet.x + 5 > spaceship.x &&
+                bullet.y < spaceship.y + spaceship.height &&
+                bullet.y + 10 > spaceship.y) {
+                lives--;
+                alienBullets = alienBullets.filter(b => b !== bullet);
+                if (lives <= 0) {
+                    gameOver = true;
+                }
+            }
+        });
+    }
+
+    // Mostrar la pantalla de "Game Over"
+    function showGameOver() {
+        document.getElementById('final-score').textContent = score;
+        document.getElementById('game-over').style.display = 'block';
+    }
+
+    // Reiniciar el juego
+    function resetGame() {
+        spaceship.x = canvas.width / 2 - 25;
+        spaceship.y = canvas.height - 60;
+        spaceship.dx = 0;
+        bullets = [];
+        alienBullets = [];
+        score = 0;
+        lives = 3;
+        gameOver = false;
+        createAliens();
+    }
+
+    // Aumentar dificultad
+    function increaseDifficulty() {
+        alienSpeed *= 1.1; // Aumentar velocidad de los marcianos
+        if (alienSpeed > 5) alienSpeed = 5; // Límite superior de velocidad
+    }
+
+    // Lógica principal del juego
+    function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawSpaceship();
+        drawAliens();
+        drawBullets();
+        drawAlienBullets();
+        drawScoreAndLives();
+
+        moveSpaceship();
+        moveBullets();
+        moveAlienBullets();
+        moveAliens();
+        alienShoot();
+        detectCollisions();
+        detectAlienBulletCollisions();
+
+        if (gameOver) {
+            showGameOver();
+            return;
+        }
+
+        // Si todos los marcianos han sido destruidos
+        if (aliens.every(row => row.every(alien => !alien.isAlive))) {
+            increaseDifficulty(); // Aumentar dificultad
+            resetGame(); // Reiniciar el juego
+        }
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    // Iniciar el juego
+    function startGame() {
+        if (!isGameStarted) {
+            isGameStarted = true;
+            createAliens();
+            document.getElementById('start-screen').style.display = 'none';
+            gameLoop();
+        }
+    }
+
+    // Manejar teclas presionadas
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            spaceship.dx = -spaceship.speed;
+        } else if (e.key === 'ArrowRight') {
+            spaceship.dx = spaceship.speed;
+        } else if (e.key === ' ' && !gameOver) {
+            bullets.push({
+                x: spaceship.x + spaceship.width / 2 - 2.5,
+                y: spaceship.y
+            });
+        }
+        if (!isGameStarted) {
+            startGame();
+        }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            spaceship.dx = 0;
+        }
+    });
+</script>
+
+</body>
+</html>
